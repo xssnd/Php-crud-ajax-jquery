@@ -59,5 +59,96 @@ $(document).ready(function () {
       rows = rows + "</td>";
       rows = rows + "</tr>";
     });
+
+    $("tbody").html(rows);
   }
+
+  /* Create new Item */
+  $(".crud-submit").click(function (e) {
+    e.preventDefault();
+    var form_action = $("#create-item").find("form").attr("action");
+    var title = $("#create-item").find("input[name='title']").val();
+    var description = $("#create-item")
+      .find("textarea[name='description']")
+      .val();
+
+    if (title != "" && description != "") {
+      $.ajax({
+        dataType: "json",
+        type: "POST",
+        url: url + form_action,
+        data: { title: title, description: description },
+      }).done(function (daata) {
+        $("#create-item").find("input[name='title']").val("");
+        $("#create-item").find("textarea[name='descriptoin']").val("");
+        getPageData();
+        $(".modal").modal("hide");
+        toastr.success("Item Create Successfully.", "SUccess Alert", {
+          timeOut: 5000,
+        });
+      });
+    } else {
+      alert("You are missing title or description");
+    }
+  });
+
+  /* Remove Item */
+  $("body").on("click", ".remove-item", function () {
+    var id = $(this).parent("td").data("id");
+    var c_obj = $(this).parents("tr");
+
+    $.ajax({
+      dataType: "json",
+      type: "POST",
+      url: url + "api/delete.php",
+      data: { id: id },
+    }).done(function (data) {
+      c_obj.remove();
+      toastr.success("Item Deleted SUccessfully.", "Success Alert", {
+        timeOut: 500,
+      });
+      getPageData();
+    });
+  });
+
+  /* Edit Item */
+  $("body").on("click", ".edit-item", function () {
+    var id = $(this).parent("td").data("id");
+    var title = $(this).parent("td").prev("td").prev("td").text();
+    var description = $(this).parent("td").prev("td").text();
+
+    $("#edit-item").find("input[name='title']").val(title);
+    $("#edit-item").find("textarea[name='description']").val(description);
+    $("#edit-item").find(".edit-id").val(id);
+  });
+
+  /* UPDATE NEW ITEM */
+  $(".crud-submit-edit").click(function (e) {
+    e.preventDefault();
+    var form_action = $("#edit-item").find("form").attr("action");
+    var title = $("#edit-item").find("input[name='title']").val();
+
+    var description = $("#edit-item")
+      .find("textarea[name='description']")
+      .val();
+    var id = $("#edit-item").find(".edit-id").val();
+
+    if (title != " " && description != "") {
+      $.ajax({
+        dataType: "json",
+        type: "POST",
+        url: url + form_action,
+        data: { title: title, description: description, id: id },
+      }).done(function (data) {
+        getPageData();
+        $(".modal").modal("hide");
+        toastr.success("Item Updated Successfully.", "Success Alert", {
+          timeout: 500,
+        });
+      });
+    } else {
+      alert("You are missing title or description");
+    }
+  });
+  /* end */
 });
