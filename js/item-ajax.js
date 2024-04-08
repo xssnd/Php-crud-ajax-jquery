@@ -49,6 +49,15 @@ $(document).ready(function () {
     $.each(data, function (key, value) {
       rows = rows + "<tr>";
       rows = rows + "<td>" + value.title + "</td>";
+      rows = rows + "<td>" + value.description + "</td>";
+      rows = rows + '<td data-id="' + value.id + '">';
+      rows =
+        rows +
+        '<button data-toggle="modal" data-target="#edit-item" class="btn btn-primary edit-item">Edit</button>';
+      rows =
+        rows + '<button class="btn btn-danger remove-item">Delete</button>';
+      rows = rows + "</td>";
+      rows = rows + "</tr>";
     });
   }
 });
