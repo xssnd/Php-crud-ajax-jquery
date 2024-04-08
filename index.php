@@ -12,8 +12,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.5/validator.min.js"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
-
-    <script src="/js/item-ajax.js"></script>
+    <script type="text/javascript">
+        var $url = "http://phpajax.test/Php-crud-ajax-jquery/"
+    </script>
+    <script src="js/item-ajax.js"></script>
 </head>
 
 <body>
@@ -24,7 +26,7 @@
                     <h2>PHP Jquery Ajax CRUD Example</h2>
                 </div>
                 <div class="pull-right">
-                    <button type="button" class="btn btn-success" data-toggle="model" data-target="#create-item">
+                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-item">
                         Create item
                     </button>
                 </div>
@@ -34,7 +36,7 @@
         <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th>Titles</th>
+                    <th>Title</th>
                     <th>Description</th>
                     <th width="200px">Action</th>
                 </tr>
@@ -59,8 +61,15 @@
 
                             <div class="form-group">
                                 <label for="title" class="control-label">Title:</label>
-                                <input type="text" class="form-control" name="title" data-error="Please enter title." required>
-                                <div class="help-block-with-errors"></div>
+                                <input type="text" class="form-control" name="title" data-error="Please enter title." required />
+                                <div class="help-block-with-errors">
+                                </div>
+                            </div>
+
+                            <div class="form=group">
+                                <label class="control-label" for="title">Description:</label>
+                                <textarea name="description" class="form-control" data-error="Please Enter description" required></textarea>
+                                <div class="help-block with-errors"></div>
                             </div>
 
                             <div class="form-group">
@@ -78,7 +87,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type=button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">x</span></button>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">x</span></button>
                         <h4 class="modal-title" id="myModalLabel">Edit Item</h4>
                     </div>
                     <div class="modal-body">
@@ -93,9 +102,8 @@
 
                             <div class="form-group">
                                 <label class="control-label" for="title">Description: </label>
-                                <textarea name="description" class="form-control" data-error="please enter description." required>
-                        <div class="help-block with errors"></div>
-                    </textarea>
+                                <textarea name="description" class="form-control" data-error="please enter description." required></textarea>
+                                <div class="help-block with errors"></div>
                             </div>
 
                             <div class="form-group">
@@ -103,7 +111,6 @@
                             </div>
                         </form>
                     </div>
-
                 </div>
             </div>
         </div>

@@ -32,7 +32,7 @@ $(document).ready(function () {
     });
   }
 
-  /* Get Page Data */
+  /* Get Page Data*/
   function getPageData() {
     $.ajax({
       dataType: "json",
@@ -43,7 +43,7 @@ $(document).ready(function () {
     });
   }
 
-  /* Add new Item Table row */
+  /* Add new Item table row */
   function manageRow(data) {
     var rows = "";
     $.each(data, function (key, value) {
@@ -53,7 +53,7 @@ $(document).ready(function () {
       rows = rows + '<td data-id="' + value.id + '">';
       rows =
         rows +
-        '<button data-toggle="modal" data-target="#edit-item" class="btn btn-primary edit-item">Edit</button>';
+        '<button data-toggle="modal" data-target="#edit-item" class="btn btn-primary edit-item">Edit</button> ';
       rows =
         rows + '<button class="btn btn-danger remove-item">Delete</button>';
       rows = rows + "</td>";
@@ -78,17 +78,17 @@ $(document).ready(function () {
         type: "POST",
         url: url + form_action,
         data: { title: title, description: description },
-      }).done(function (daata) {
+      }).done(function (data) {
         $("#create-item").find("input[name='title']").val("");
-        $("#create-item").find("textarea[name='descriptoin']").val("");
+        $("#create-item").find("textarea[name='description']").val("");
         getPageData();
         $(".modal").modal("hide");
-        toastr.success("Item Create Successfully.", "SUccess Alert", {
+        toastr.success("Item Created Successfully.", "Success Alert", {
           timeOut: 5000,
         });
       });
     } else {
-      alert("You are missing title or description");
+      alert("You are missing title or description.");
     }
   });
 
@@ -104,8 +104,8 @@ $(document).ready(function () {
       data: { id: id },
     }).done(function (data) {
       c_obj.remove();
-      toastr.success("Item Deleted SUccessfully.", "Success Alert", {
-        timeOut: 500,
+      toastr.success("Item Deleted Successfully.", "Success Alert", {
+        timeOut: 5000,
       });
       getPageData();
     });
@@ -122,7 +122,7 @@ $(document).ready(function () {
     $("#edit-item").find(".edit-id").val(id);
   });
 
-  /* UPDATE NEW ITEM */
+  /* Updated new Item */
   $(".crud-submit-edit").click(function (e) {
     e.preventDefault();
     var form_action = $("#edit-item").find("form").attr("action");
@@ -133,7 +133,7 @@ $(document).ready(function () {
       .val();
     var id = $("#edit-item").find(".edit-id").val();
 
-    if (title != " " && description != "") {
+    if (title != "" && description != "") {
       $.ajax({
         dataType: "json",
         type: "POST",
@@ -143,12 +143,11 @@ $(document).ready(function () {
         getPageData();
         $(".modal").modal("hide");
         toastr.success("Item Updated Successfully.", "Success Alert", {
-          timeout: 500,
+          timeOut: 5000,
         });
       });
     } else {
-      alert("You are missing title or description");
+      alert("You are missing title or description.");
     }
   });
-  /* end */
 });

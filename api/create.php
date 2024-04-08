@@ -1,15 +1,19 @@
 <?php
-
 require 'db_config.php';
-
-$post = $_POST;
-$sql = "INSERT INTO items (title,description) 
-values ('" . $post['title'] . "','" . $post['description'] . "')";
-$result = $mysqli->$query($sql);
-
-$sql = "SELECT * FROM items Order by id desc LIMIT 1";
-
+$num_rec_per_page = 5;
+if (isset($_GET["page"])) {
+    $page  = $_GET["page"];
+} else {
+    $page = 1;
+};
+$start_from = ($page - 1) * $num_rec_per_page;
+$sqlTotal = "SELECT * FROM items";
+$sql = "SELECT * FROM items Order By id desc LIMIT $start_from, $num_rec_per_page";
 $result = $mysqli->query($sql);
-
-$data = $result->fetch_assoc();
+while ($row = $result->fetch_assoc()) {
+    $json[] = $row;
+}
+$data['data'] = $json;
+$result =  mysqli_query($mysqli, $sqlTotal);
+$data['total'] = mysqli_num_rows($result);
 echo json_encode($data);
